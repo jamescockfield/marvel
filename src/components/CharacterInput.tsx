@@ -11,12 +11,8 @@ interface CharacterInputProps {
 export const CharacterInput: React.FC<CharacterInputProps> = ({
   searchTerm,
   onSearchTermChange,
-  onFocus = () => {}
+  onFocus
 }) => {
-  const handleFocus = () => {
-    onFocus();
-  };
-
   return (
     <div className="relative flex-grow">
       <input
@@ -25,7 +21,7 @@ export const CharacterInput: React.FC<CharacterInputProps> = ({
         onChange={onSearchTermChange}
         placeholder="Search Marvel characters..."
         className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded"
-        onFocus={handleFocus}
+        onFocus={onFocus}
       />
     </div>
   );

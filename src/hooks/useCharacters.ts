@@ -13,6 +13,10 @@ export const useCharacters = (searchTerm: string): UseCharactersResult => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (characters.includes(searchTerm)) {
+        return;
+      }
+
       if (searchTerm.length < 2) {
         setCharacters([]);
         return;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CharacterInput } from './CharacterInput';
 import { CharacterDropdown } from './CharacterDropdown';
 import { useCharacters } from '../hooks/useCharacters';
@@ -9,30 +9,36 @@ export const CharacterSearch = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   
   const { characters, isLoading } = useCharacters(searchTerm);
 
-  // Effect to handle dropdown visibility when characters change
+  // Handle dropdown visibility when characters change
   useEffect(() => {
-    if (characters.length > 0) {
-      setIsDropdownOpen(true);
-    } else {
-      setIsDropdownOpen(false);
-    }
+    setIsDropdownOpen(characters.length > 0);
   }, [characters]);
 
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current && 
+        !searchContainerRef.current.contains(event.target as Node) && 
+        isDropdownOpen
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setSearchTerm(newValue);
-    
-    // If the input value matches the selected character, keep dropdown closed
-    if (newValue === selectedCharacter) {
-      setIsDropdownOpen(false);
-    } 
-    // Clear selected character when input changes to something else
-    else if (newValue !== selectedCharacter) {
-      setSelectedCharacter('');
-    }
+    setSearchTerm(e.target.value);
+    setSelectedCharacter('');
   };
 
   const handleCharacterClick = (character: string) => {
@@ -50,7 +56,7 @@ export const CharacterSearch = () => {
   return (
     <div className="relative">
       <div>Search</div>
-      <div className="flex w-full">
+      <div className="flex w-full" ref={searchContainerRef}>
         <div className="relative flex-grow">
           <CharacterInput 
             searchTerm={searchTerm}
