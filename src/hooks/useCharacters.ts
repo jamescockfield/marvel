@@ -31,8 +31,8 @@ export const useCharacters = (searchTerm: string): UseCharactersResult => {
         
         const data = await response.json();
         setCharacters(data.results);
-        console.log(data);
       } catch (error) {
+        // TODO: return errors to be handled by the component
         console.error('Error fetching Marvel characters:', error);
       } finally {
         setIsLoading(false);

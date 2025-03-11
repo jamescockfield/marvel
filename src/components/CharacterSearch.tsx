@@ -11,6 +11,7 @@ export const CharacterSearch = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   
+  // TODO: handle errors from the hook
   const { characters, isLoading } = useCharacters(searchTerm);
 
   // Handle dropdown visibility when characters change
