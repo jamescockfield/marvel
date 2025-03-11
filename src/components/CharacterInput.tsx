@@ -60,20 +60,37 @@ export const CharacterInput = () => {
   return (
     <div className="relative">
       <div>Search</div>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleInputChange}
-        placeholder="Search Marvel characters..."
-        className="w-full p-2 border rounded"
-        onFocus={() => characters.length > 0 && setIsDropdownOpen(true)}
-      />
-      <CharacterDropdown
-        characters={characters}
-        isDropdownOpen={isDropdownOpen}
-        isLoading={isLoading}
-        onCharacterClick={handleCharacterClick}
-      />
+      <div className="flex w-full">
+        <div className="relative flex-grow">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleInputChange}
+            placeholder="Search Marvel characters..."
+            className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded"
+            onFocus={() => characters.length > 0 && setIsDropdownOpen(true)}
+          />
+          {/* Dropdown positioned directly under the input with same width */}
+          <div className="absolute left-0 right-0 z-10">
+            <CharacterDropdown
+              characters={characters}
+              isDropdownOpen={isDropdownOpen}
+              isLoading={isLoading}
+              onCharacterClick={handleCharacterClick}
+            />
+          </div>
+        </div>
+        <button 
+          className="bg-yellow-700 hover:bg-yellow-800 text-yellow-50 px-4 py-2 rounded ml-1.5"
+          onClick={() => {
+            if (searchTerm.length >= 2) {
+              setIsDropdownOpen(true);
+            }
+          }}
+        >
+          Search
+        </button>
+      </div>
       <div className="mt-10">Footer</div>
     </div>
   );
