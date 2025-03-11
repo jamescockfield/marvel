@@ -1,9 +1,10 @@
-import { fetchCharacters } from "../services/api";
+import { fetchCharacterNames } from "../services/api";
 
 async function FetchMarvel() {
   try {
-    await fetchCharacters("spider");
+    const names = await fetchCharacterNames("spider");
     console.log("Marvel API call completed");
+    console.log(names);
   } catch (error) {
     console.error("Error fetching Marvel characters:", error);
   }

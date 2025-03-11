@@ -6,7 +6,7 @@ export async function fetchCharacterNames(nameStartsWith: string) {
   return data.data.results.map((character: any) => character.name);
 }
 
-export async function fetchCharacters(nameStartsWith: string) {
+async function fetchCharacters(nameStartsWith: string) {
   const baseUrl = process.env.MARVEL_API_URL;
 
   const params = getAuthParams();
