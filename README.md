@@ -2,6 +2,8 @@
 
 ### Running
 
+Copy .env.example to .env and adjust values
+
 ```bash
 npm run dev
 ```
