@@ -4,20 +4,24 @@ import React, { useState, useEffect } from 'react';
 
 export const CharacterInput = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [characters, setCharacters] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (searchTerm.length < 2) {
+        setCharacters([]);
         return;
       }
 
       try {
-        const response = await fetch(''); // TODO: add API route
+        const response = await fetch(`/api/characters?query=${searchTerm}`);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
         
         const data = await response.json();
+
+        setCharacters(data.results);
 
         console.log(data);
       } catch (error) {
@@ -41,6 +45,13 @@ export const CharacterInput = () => {
         onChange={handleInputChange}
         placeholder="Search Marvel characters..."
       />
+      {characters.length > 0 && (
+        <ul>
+          {characters.map((character, index) => (
+            <li key={index}>{character}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
