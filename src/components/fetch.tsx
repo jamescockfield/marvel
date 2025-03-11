@@ -1,8 +1,8 @@
-import { fetchMarvelCharacters } from "../services/api";
+import { fetchCharacters } from "../services/api";
 
 async function FetchMarvel() {
   try {
-    await fetchMarvelCharacters("spider");
+    await fetchCharacters("spider");
     console.log("Marvel API call completed");
   } catch (error) {
     console.error("Error fetching Marvel characters:", error);
