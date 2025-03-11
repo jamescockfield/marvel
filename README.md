@@ -5,6 +5,7 @@
 Copy .env.example to .env and adjust values
 
 ```bash
+npm install
 npm run dev
 ```
 
