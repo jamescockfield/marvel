@@ -59,6 +59,7 @@ export const CharacterInput = () => {
 
   return (
     <div className="relative">
+      <div>Search</div>
       <input
         type="text"
         value={searchTerm}
@@ -73,6 +74,7 @@ export const CharacterInput = () => {
         isLoading={isLoading}
         onCharacterClick={handleCharacterClick}
       />
+      <div className="mt-10">Footer</div>
     </div>
   );
 };
